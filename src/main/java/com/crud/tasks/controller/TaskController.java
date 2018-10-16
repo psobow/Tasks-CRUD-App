@@ -1,6 +1,7 @@
 package com.crud.tasks.controller;
 
 
+import com.crud.tasks.domain.Task;
 import com.crud.tasks.dto.TaskDto;
 import com.crud.tasks.mapper.TaskMapper;
 import com.crud.tasks.service.DbService;
@@ -21,33 +22,28 @@ public class TaskController {
     @Autowired
     private TaskMapper taskMapper;
 
-    //@RequestMapping(method = RequestMethod.GET, value = "getTasks")
     @GetMapping
     public List<TaskDto> getTasks(){
         return taskMapper.mapToTaskDtoList(dbService.getAllTasks());
     }
 
-    //@RequestMapping(method = RequestMethod.GET, value = "getTask")
     @GetMapping("/{id}")
-    public TaskDto getTask(@PathVariable("id") Long id){
-        return taskMapper.mapToTaskDto(dbService.getTaskById(id));
+    public TaskDto getTask(@PathVariable("id") final Long taskId){
+        return taskMapper.mapToTaskDto(dbService.getTaskById(taskId));
     }
 
-    //@RequestMapping(method = RequestMethod.DELETE, value = "deleteTask")
-    @DeleteMapping
-    public void deleteTask(Long taskId){
-
+    @DeleteMapping("/{id}")
+    public void deleteTask(@PathVariable("id") final Long taskId){
+        dbService.deleteTaskById(taskId);
     }
 
-    //@RequestMapping(method = RequestMethod.PUT, value = "updateTask")
     @PutMapping
-    public TaskDto updateTask(TaskDto taskDto){
+    public TaskDto updateTask(final TaskDto taskDto){
         return new TaskDto(1L, "Edited title", "Edited content");
     }
 
-    //@RequestMapping(method = RequestMethod.POST, value = "createTask")
-    @PostMapping
-    public void createTask(TaskDto taskDto){
-
+    @PostMapping( consumes = "application/json" )
+    public void createTask( @RequestBody final TaskDto taskDto ){
+        dbService.saveTask(taskMapper.mapToTask(taskDto));
     }
 }
