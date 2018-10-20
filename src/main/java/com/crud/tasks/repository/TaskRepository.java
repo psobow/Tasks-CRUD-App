@@ -14,13 +14,11 @@ public interface TaskRepository extends CrudRepository<Task,Long> {
     @Override
     List<Task> findAll();
 
-    @Override
-    Task findOne(final Long id);
+    Optional<Task> findById(final Long id);
 
     @Override
     @SuppressWarnings("unchecked")
     Task save(final Task task);
 
-    @Override
-    void delete(Long id);
+    Integer deleteById(final Long id);
 }

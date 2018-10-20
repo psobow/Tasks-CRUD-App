@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id; // powinno być final??
+    private Long id;
 
     @Column(name = "name")
     private String title;
@@ -22,8 +22,4 @@ public class Task {
     @Column(name = "description")
     private String content;
 
-    public Task(String name, String content) {
-        this.title = name;
-        this.content = content;
-    }
 }
