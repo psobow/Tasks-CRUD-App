@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/v1/trello")
@@ -20,17 +19,7 @@ public class TrelloController {
 
     @GetMapping
     public List<TrelloBoardDto> getTrelloBoards() {
-
-        List<TrelloBoardDto> trelloBoards = trelloClient.getTrelloBoards();
-
-        //trelloBoards.forEach(System.out::println);
-        trelloBoards.stream()
-                .filter(trelloBoardDto -> Objects.nonNull(trelloBoardDto.getId()))
-                .filter(trelloBoardDto -> trelloBoardDto.getName() != null)
-                .filter(trelloBoardDto -> trelloBoardDto.getName().contains("Kodilla"))
-                .forEach(System.out::println);
-
-        return trelloBoards;
+        return trelloClient.getTrelloBoards();
     }
 
     @PostMapping

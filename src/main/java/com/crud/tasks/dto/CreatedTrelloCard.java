@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-//@AllArgsConstructor // ten konstruktor jest nie potrzebny!
+@AllArgsConstructor // ten konstruktor jest nie potrzebny!
 @NoArgsConstructor
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)

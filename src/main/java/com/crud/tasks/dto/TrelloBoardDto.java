@@ -11,15 +11,15 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-//@AllArgsConstructor // ten konstruktor jest nie potrzebny!
+@AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TrelloBoardDto {
 
-    @JsonProperty("name")
-    private String name;
-
     @JsonProperty("id")
     private String id;
+
+    @JsonProperty("name")
+    private String name;
 
     @JsonProperty("lists")
     private List<TrelloListDto> lists;

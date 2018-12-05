@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-//@AllArgsConstructor // ten konstruktor jest nie potrzebny!
+@AllArgsConstructor
 @Getter
 public class TrelloCardDto {
     private String name;
