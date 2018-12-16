@@ -1,12 +1,12 @@
 package com.crud.tasks.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Getter
@@ -14,14 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TrelloBoardDto {
-
-    @JsonProperty("id")
     private String id;
-
-    @JsonProperty("name")
     private String name;
-
-    @JsonProperty("lists")
     private List<TrelloListDto> lists;
     
     
@@ -32,10 +26,17 @@ public class TrelloBoardDto {
     }
 
     private String getEveryListToString(){
+
         String everyList = "";
         for (TrelloListDto list : this.lists) {
             everyList += "           " + list + "\n";
         }
         return everyList;
     }
+
+    private String getEveryListToStringVersion2(){
+        return lists.stream()
+                .map(TrelloListDto::toString)
+                .collect(Collectors.joining("\n"));
+     }
 }

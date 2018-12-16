@@ -4,8 +4,8 @@ import com.crud.tasks.config.TrelloConfig;
 import com.crud.tasks.dto.CreatedTrelloCard;
 import com.crud.tasks.dto.TrelloBoardDto;
 import com.crud.tasks.dto.TrelloCardDto;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
@@ -19,15 +19,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-
+@Slf4j
 @Component
 public class TrelloClient {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(TrelloClient.class);
-
     @Autowired
     private TrelloConfig trelloConfig;
-
     @Autowired
     private RestTemplate restTemplate;
 
@@ -46,7 +42,7 @@ public class TrelloClient {
             return Arrays.asList(Optional.ofNullable(boardsResponse).orElse(new TrelloBoardDto[0]));
 
         } catch (RestClientException e) {
-            LOGGER.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             return new ArrayList<>();
         }
     }
