@@ -18,14 +18,14 @@ public class SimpleEmailService {
 
     public void send(final Mail mail){
 
-        log.info("Starting email preparation...");
+        log.info("[SimpleEmailService] Starting email preparation...");
         try {
             SimpleMailMessage mailMessage = createMailMessage(mail);
             javaMailSender.send(mailMessage);
 
-            log.info("Email has been sent.");
+            log.info("[SimpleEmailService] Email has been sent.");
         } catch (MailException e) {
-            log.error("Failed to process email sending: ", e.getMessage(), e);
+            log.error(" [SimpleEmailService] Failed to process email sending: ", e.getMessage(), e);
         }
     }
 

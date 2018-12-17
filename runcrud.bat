@@ -1,3 +1,5 @@
+:: wszystkie kontrolery dostępne będą pod adresem: http://localhost:8080/crud/v1...
+
 call gradlew build
 if "%ERRORLEVEL%" == "0" goto rename
 echo.
