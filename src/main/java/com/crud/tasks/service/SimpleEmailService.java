@@ -8,7 +8,11 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import java.util.Objects;
+
+import static java.util.Optional.ofNullable;
 
 @Slf4j
 @Service
@@ -18,48 +22,50 @@ public class SimpleEmailService {
 
     public void send(final Mail mail){
 
-        log.info("[SimpleEmailService] Starting email preparation...");
+        log.info("Starting email preparation...");
         try {
             SimpleMailMessage mailMessage = createMailMessage(mail);
             javaMailSender.send(mailMessage);
 
-            log.info("[SimpleEmailService] Email has been sent.");
+            log.info("Email has been sent.");
         } catch (MailException e) {
-            log.error(" [SimpleEmailService] Failed to process email sending: ", e.getMessage(), e);
+            log.error("Failed to process email sending: ", e.getMessage(), e);
         }
     }
 
-    private SimpleMailMessage createMailMessage(final Mail mail){
+    public SimpleMailMessage createMailMessage(final Mail mail){
+
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(mail.getMailTo());
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
 
-        boolean isValid = isToCcFieldValid(mail);
+        ofNullable(mail.getToCc()).ifPresent(email -> {
+            boolean isValid = isValidEmailAddress(email);
+            if(isValid) mailMessage.setCc(mail.getToCc());
+        });
 
-        if(isValid) mailMessage.setCc(mail.getToCc());
 
         return mailMessage;
     }
 
-    private boolean isToCcFieldValid(final Mail mail) {
+    private boolean isValidEmailAddress(String email) {
 
-        if ( mail.getToCc() == null ) {
-            log.warn("Field toCc is null.");
+        if (email == null) {
+            log.warn("toCc is null");
             return false;
         }
 
-        if (mail.getToCc() == "" ) {
-            log.warn("Field toCc is empty.");
-            return false;
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            //log.error(ex.getMessage(), ex);
+            result = false;
         }
-
-
-        if ( ! mail.getToCc().contains("@")){
-            log.warn("Field toCc does not contain @. Email incorrect.");
-            return false;
-        }
-
-        return true;
+        log.info("Field toCc validation result: " + result);
+        return result;
     }
+
 }

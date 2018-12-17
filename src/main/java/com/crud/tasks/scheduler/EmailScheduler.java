@@ -22,19 +22,13 @@ public class EmailScheduler {
     private static final String SUBJECT = "Tasks: New Trello card";
 
     //@Scheduled(cron = "0 0 10 * * *")
-    @Scheduled(fixedDelay = 10000)
+    //@Scheduled(fixedDelay = 10000)
     public void sendInformationEmail(){
         long size = taskRepository.count();
-        String msg = "Currently in database you got: " + size + " tasks";
-
-        if (size == 1) {
-            msg = "Currently in database you got: " + size + " task";
-        }
-
         simpleEmailService.send(new Mail(
                 adminConfig.getAdminMail(),
                 SUBJECT,
-                msg,
+                "Currently in database you got: " + size + " task" + (size > 1 ? "s" : ""),
                 ""
         ));
     }
