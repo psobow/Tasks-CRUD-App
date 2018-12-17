@@ -35,12 +35,31 @@ public class SimpleEmailService {
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
 
-        if (Objects.nonNull(mail.getToCc())) {
-            mailMessage.setCc(mail.getToCc());
-        } else {
-            log.warn("field toCc is null. Additional receiver will not be set.");
-        }
+        boolean isValid = isToCcFieldValid(mail);
+
+        if(isValid) mailMessage.setCc(mail.getToCc());
 
         return mailMessage;
+    }
+
+    private boolean isToCcFieldValid(final Mail mail) {
+
+        if ( mail.getToCc() == null ) {
+            log.warn("Field toCc is null.");
+            return false;
+        }
+
+        if (mail.getToCc() == "" ) {
+            log.warn("Field toCc is empty.");
+            return false;
+        }
+
+
+        if ( ! mail.getToCc().contains("@")){
+            log.warn("Field toCc does not contain @. Email incorrect.");
+            return false;
+        }
+
+        return true;
     }
 }
