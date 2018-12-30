@@ -4,20 +4,17 @@ import com.crud.tasks.config.AdminConfig;
 import com.crud.tasks.domain.Mail;
 import com.crud.tasks.repository.TaskRepository;
 import com.crud.tasks.service.SimpleEmailService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class EmailScheduler {
-    @Autowired
-    private SimpleEmailService simpleEmailService;
-
-    @Autowired
-    private TaskRepository taskRepository;
-
-    @Autowired
-    private AdminConfig adminConfig;
+    private final SimpleEmailService simpleEmailService;
+    private final TaskRepository taskRepository;
+    private final AdminConfig adminConfig;
 
     private static final String SUBJECT = "Tasks: New Trello card";
 

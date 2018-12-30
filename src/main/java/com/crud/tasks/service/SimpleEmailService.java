@@ -1,6 +1,7 @@
 package com.crud.tasks.service;
 
 import com.crud.tasks.domain.Mail;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -16,9 +17,10 @@ import static java.util.Optional.ofNullable;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class SimpleEmailService {
-    @Autowired
-    private JavaMailSender javaMailSender;
+
+    private final JavaMailSender javaMailSender;
 
     public void send(final Mail mail){
 
@@ -40,11 +42,9 @@ public class SimpleEmailService {
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
 
-        ofNullable(mail.getToCc()).ifPresent(email -> {
-            boolean isValid = isValidEmailAddress(email);
-            if(isValid) mailMessage.setCc(mail.getToCc());
-        });
-
+        if (isValidEmailAddress(mail.getToCc())){
+            mailMessage.setCc(mail.getToCc());
+        }
 
         return mailMessage;
     }

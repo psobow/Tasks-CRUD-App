@@ -1,4 +1,4 @@
-package com.crud.tasks.controller;
+package com.crud.tasks.client;
 
 
 import com.crud.tasks.client.TrelloClient;
@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TrelloControllerTest {
+public class TrelloClientTestWithSpring {
 
     @Autowired
     TrelloClient trelloClient;

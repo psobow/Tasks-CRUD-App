@@ -21,11 +21,10 @@ import java.util.Optional;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class TrelloClient {
-    @Autowired
-    private TrelloConfig trelloConfig;
-    @Autowired
-    private RestTemplate restTemplate;
+    private final TrelloConfig trelloConfig;
+    private final RestTemplate restTemplate;
 
 
     public List<TrelloBoardDto> getTrelloBoards() {
