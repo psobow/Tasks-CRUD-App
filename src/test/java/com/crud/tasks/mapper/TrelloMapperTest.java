@@ -131,7 +131,6 @@ public class TrelloMapperTest {
         TrelloCardDto trelloCardDto = trelloMapper.mapToCardDto(trelloCard);
 
         //Then
-
         Assert.assertEquals("TrelloCardDto", trelloCardDto.getClass().getSimpleName());
     }
 
@@ -144,7 +143,6 @@ public class TrelloMapperTest {
         TrelloCard trelloCard = trelloMapper.mapToCard(trelloCardDto);
 
         //Then
-
         Assert.assertEquals("TrelloCard", trelloCard.getClass().getSimpleName());
     }
 }

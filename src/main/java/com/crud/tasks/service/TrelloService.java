@@ -26,6 +26,9 @@ public class TrelloService {
         return trelloClient.getTrelloBoards();
     }
 
+
+
+    // taa metoda to tak łamie zasade jednej odpowiedzialności ...
     public CreatedTrelloCardDto createTrelloCard(final TrelloCardDto trelloCardDto) {
         CreatedTrelloCardDto newCard = trelloClient.createNewCard(trelloCardDto);
 

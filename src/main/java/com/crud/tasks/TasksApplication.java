@@ -21,7 +21,7 @@ public class TasksApplication extends SpringBootServletInitializer implements Co
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("\nWitam\n");
+        System.out.println("\n\n");
     }
 
 }

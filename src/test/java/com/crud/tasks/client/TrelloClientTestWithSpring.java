@@ -1,7 +1,6 @@
 package com.crud.tasks.client;
 
 
-import com.crud.tasks.client.TrelloClient;
 import com.crud.tasks.dto.TrelloBoardDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,8 +32,6 @@ public class TrelloClientTestWithSpring {
                 .filter(trelloBoardDto -> trelloBoardDto.getName().contains("Kodilla"))
                 .forEach(System.out::println);
 
-        // Operacje wykonane na streamie nie modyfikują obiektu.
-        // trelloBoards.stream().forEach(System.out::println);
     }
 
 }

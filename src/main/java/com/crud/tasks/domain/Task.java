@@ -3,8 +3,10 @@ package com.crud.tasks.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 @AllArgsConstructor
@@ -16,10 +18,13 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "name")
+    //@NotNull
+    //@NotEmpty
     private String title;
 
-    @Column(name = "description")
+    //@NotNull
+    //@NotEmpty
+    @Column(length = 2000)
     private String content;
 
 }

@@ -20,19 +20,4 @@ public class MailConfigTest {
         System.out.println("username: " + mailConfig.getMailUsername() );
         System.out.println("Password: " + mailConfig.getMailPassword() );
     }
-
-
-    /*
-    Tak nie mozna
-    @Test
-    public void printGmailValues(){
-    ApplicationContext context =
-            new AnnotationConfigApplicationContext("com.crud.tasks.config");
-
-    MailConfig mailConfig = context.getBean(MailConfig.class);
-
-    System.out.println("username: " + mailConfig.getMailUsername() );
-    System.out.println("Password: " + mailConfig.getMailPassword() );
-    }
-     */
 }
