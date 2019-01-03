@@ -1,15 +1,15 @@
 package com.crud.tasks.controller;
 
 
-import com.crud.tasks.client.TrelloClient;
-import com.crud.tasks.dto.CreatedTrelloCard;
+import com.crud.tasks.dto.CreatedTrelloCardDto;
 import com.crud.tasks.dto.TrelloBoardDto;
 import com.crud.tasks.dto.TrelloCardDto;
 import com.crud.tasks.service.TrelloService;
+import com.crud.tasks.trello.facade.TrelloFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -17,15 +17,15 @@ import java.util.List;
 @RequestMapping("/v1/trello")
 @RequiredArgsConstructor
 public class TrelloController {
-    private final TrelloService trelloService;
+    private final TrelloFacade trelloFacade;
 
     @GetMapping
     public List<TrelloBoardDto> getTrelloBoards() {
-        return trelloService.fetchTrelloBoards();
+        return trelloFacade.fetchTrelloBoards();
     }
 
     @PostMapping
-    public CreatedTrelloCard createTrelloCard(@RequestBody final TrelloCardDto trelloCardDto){
-        return trelloService.createdTrelloCard(trelloCardDto);
+    public CreatedTrelloCardDto createTrelloCard(@Valid @RequestBody final TrelloCardDto trelloCardDto){
+        return trelloFacade.createCard(trelloCardDto);
     }
 }

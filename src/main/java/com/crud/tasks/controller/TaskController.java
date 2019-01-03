@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -39,13 +40,13 @@ public class TaskController {
 
     //Dla tej metody ID pochodzi od clienta
     @PutMapping
-    public TaskDto updateTask(@RequestBody final TaskDto taskDto) {
+    public TaskDto updateTask(@Valid @RequestBody final TaskDto taskDto) {
         return taskMapper.mapToTaskDto(dbService.saveTask(taskMapper.mapToTask(taskDto)));
     }
 
     //Dla tej metody ID pochodzi od serwera
     @PostMapping
-    public void createTask(@RequestBody final TaskDto taskDto) {
+    public void createTask(@Valid @RequestBody final TaskDto taskDto) {
         dbService.saveTask(taskMapper.mapToTask(taskDto));
     }
 
