@@ -4,6 +4,7 @@ import com.crud.tasks.domain.Task;
 import com.crud.tasks.dto.*;
 import com.crud.tasks.mapper.TaskMapper;
 import com.crud.tasks.service.DbService;
+import com.google.gson.Gson;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
@@ -19,12 +20,10 @@ import java.util.List;
 
 
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.anyListOf;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -40,8 +39,6 @@ public class TaskControllerTest {
 
     private final String TASK_ENDPOINT = "/v1/tasks";
 
-
-    // testowanie kontrollerka podejście numer jeden
 
     @Test
     public void shouldFetchEmptyList() throws Exception {
@@ -80,18 +77,13 @@ public class TaskControllerTest {
                 .andExpect(jsonPath("$[0].content", is("Test content")));
     }
 
-    //Eksperyment
     @Test
     public void shouldFetchTaskListVersion2() throws Exception {
         // Given
         List<TaskDto> tasksDto = new ArrayList<>();
         tasksDto.add(new TaskDto(1L, "Test title", "Test content"));
 
-        //List<Task> tasks = new ArrayList<>();
-        //tasks.add(new Task(1L, "Test title", "Test content"));
-
-        when(dbService.getAllTasks()).thenReturn(anyObject());
-
+        when(dbService.getAllTasks()).thenReturn(new ArrayList<>());
         when(taskMapper.mapToTasksDto(anyObject())).thenReturn(tasksDto);
 
         // When & Then
@@ -106,9 +98,52 @@ public class TaskControllerTest {
 
     @Test
     public void shouldFetchOneTask() throws Exception {
+        // Given
+        final String TASK_ID = "/1";
+        TaskDto taskDto = new TaskDto(1L, "Test title", "Test content");
 
+        when(dbService.getTaskById(anyLong())).thenReturn(new Task());
+        when(taskMapper.mapToTaskDto(anyObject())).thenReturn(taskDto);
+
+        // When & Then
+        mockMvc.perform(get(TASK_ENDPOINT + TASK_ID).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                // TaskDto fields
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.title", is("Test title")))
+                .andExpect(jsonPath("$.content", is("Test content")));
     }
+
+    @Test
+    public void shouldDeleteOneTask() throws Exception {
+        // nie wiem jak przetestować metode która zwraca voida
+    }
+
+    @Test
+    public void shouldUpdateTask() throws Exception {
+        // Given
+        TaskDto taskDto = new TaskDto(1L, "Test title", "Test content");
+
+        when(taskMapper.mapToTask(anyObject())).thenReturn(new Task());
+        when(dbService.saveTask(anyObject())).thenReturn(new Task());
+        when(taskMapper.mapToTaskDto(anyObject())).thenReturn(taskDto);
+
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(taskDto);
+
+        // When & Then
+        mockMvc.perform(put(TASK_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(jsonContent))
+                // TaskDto fields
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.title", is("Test title")))
+                .andExpect(jsonPath("$.content", is("Test content")));
+    }
+
+    @Test
+    public void shouldCreateTask() throws Exception {
+        // nie wiem jak przetestować metode która zwraca voida
+    }
+
 }
-
-
-// TODO: przetestować pozostałe metody controllera
