@@ -15,7 +15,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @Configuration
 public class CoreConfiguration {
-
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();

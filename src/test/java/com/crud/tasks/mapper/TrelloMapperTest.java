@@ -23,7 +23,6 @@ public class TrelloMapperTest {
     private TrelloMapper trelloMapper;
 
 
-
     @Test
     public void mapToBoardsWithEmptyObject() {
         //Given
@@ -35,9 +34,7 @@ public class TrelloMapperTest {
         List<TrelloBoard> trelloBoards = trelloMapper.mapToBoards(trelloBoardsDto);
 
         //Then
-        TrelloBoard result = trelloBoards.stream()
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException());
+        TrelloBoard result = trelloBoards.get(0);
 
         Assert.assertEquals("TrelloBoard", result.getClass().getSimpleName());
     }
@@ -57,9 +54,7 @@ public class TrelloMapperTest {
         List<TrelloBoard> trelloBoards = trelloMapper.mapToBoards(trelloBoardsDto);
 
         //Then
-        TrelloBoard result = trelloBoards.stream()
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException());
+        TrelloBoard result = trelloBoards.get(0);
 
         Assert.assertEquals("TrelloBoard", result.getClass().getSimpleName());
     }
@@ -79,9 +74,7 @@ public class TrelloMapperTest {
         List<TrelloBoardDto> trelloBoardsDto = trelloMapper.mapToBoardsDto(trelloBoards);
 
         //Then
-        TrelloBoardDto result = trelloBoardsDto.stream()
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException());
+        TrelloBoardDto result = trelloBoardsDto.get(0);
 
         Assert.assertEquals("TrelloBoardDto", result.getClass().getSimpleName());
     }
@@ -97,9 +90,7 @@ public class TrelloMapperTest {
         List<TrelloList> trelloLists = trelloMapper.mapToLists(trelloListsDto);
 
         //Then
-        TrelloList result = trelloLists.stream()
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException());
+        TrelloList result = trelloLists.get(0);
 
         Assert.assertEquals("TrelloList", result.getClass().getSimpleName());
     }
@@ -115,9 +106,7 @@ public class TrelloMapperTest {
         List<TrelloListDto> trelloListsDto = trelloMapper.mapToListsDto(trelloLists);
 
         //Then
-        TrelloListDto result = trelloListsDto.stream()
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException());
+        TrelloListDto result = trelloListsDto.get(0);
 
         Assert.assertEquals("TrelloListDto", result.getClass().getSimpleName());
     }

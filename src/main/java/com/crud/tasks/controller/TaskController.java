@@ -23,7 +23,7 @@ public class TaskController {
 
     @GetMapping
     public List<TaskDto> getTasks() {
-        return taskMapper.mapToTaskDtoList(dbService.getAllTasks());
+        return taskMapper.mapToTasksDto(dbService.getAllTasks());
     }
 
     @GetMapping("/{id}")

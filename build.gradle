@@ -57,4 +57,9 @@ dependencies {
     
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '1.5.16.RELEASE'
+
+// mapowanie obiektów na JSON
+
+    compile('com.google.code.gson:gson:2.8.2')
+
 }

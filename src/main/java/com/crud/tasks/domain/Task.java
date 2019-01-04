@@ -18,12 +18,12 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //@NotNull
-    //@NotEmpty
+    @NotNull
+    @NotEmpty
     private String title;
 
-    //@NotNull
-    //@NotEmpty
+    @NotNull
+    @NotEmpty
     @Column(length = 2000)
     private String content;
 

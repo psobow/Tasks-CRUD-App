@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 @Getter
 @Component
 public class MailConfig {
-
     @Value("${spring.mail.username}")
     private String mailUsername;
     @Value("${spring.mail.password}")

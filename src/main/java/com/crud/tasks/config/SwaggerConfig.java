@@ -7,7 +7,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @EnableWebMvc
 public class SwaggerConfig extends WebMvcConfigurerAdapter {
-
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         // Required by Swagger UI configuration

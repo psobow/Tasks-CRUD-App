@@ -17,11 +17,9 @@ import javax.mail.internet.InternetAddress;
 @Service
 @RequiredArgsConstructor
 public class SimpleEmailService {
-
     private final JavaMailSender javaMailSender;
 
     public void send(final Mail mail){
-
         log.info("Starting email preparation...");
         try {
             SimpleMailMessage mailMessage = createMailMessage(mail);
@@ -34,7 +32,6 @@ public class SimpleEmailService {
     }
 
     public SimpleMailMessage createMailMessage(final Mail mail){
-
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(mail.getMailTo());
         mailMessage.setSubject(mail.getSubject());
@@ -48,7 +45,6 @@ public class SimpleEmailService {
     }
 
     private boolean isValidEmailAddress(String email) {
-
         if (email == null) {
             log.warn("toCc is null");
             return false;
@@ -62,6 +58,7 @@ public class SimpleEmailService {
             //log.error(ex.getMessage(), ex);
             result = false;
         }
+
         log.info("Field toCc validation result: " + result);
         return result;
     }

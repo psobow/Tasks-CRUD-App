@@ -24,7 +24,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TrelloClientTest {
-
     @InjectMocks
     private TrelloClient trelloClient;
 
@@ -45,7 +44,6 @@ public class TrelloClientTest {
     @Test
     public void shouldFetchTrelloBoards() throws URISyntaxException {
         // Given
-
         TrelloBoardDto[] trelloBoards = new TrelloBoardDto[1];
         trelloBoards[0] = new TrelloBoardDto("test_id", "test_board", new ArrayList<>());
 
@@ -99,19 +97,16 @@ public class TrelloClientTest {
         when(restTemplate.postForObject(uri, null, CreatedTrelloCardDto.class)).thenReturn(createdTrelloCardDto);
 
         // When
-
         CreatedTrelloCardDto newCard = trelloClient.createNewCard(trelloCardDto);
 
         //Then
         assertEquals("1", newCard.getId());
         assertEquals("Test task", newCard.getName());
         assertEquals("http://test.com", newCard.getShortUrl());
-
     }
 
     @Test
     public void shouldReturnEmptyList() throws URISyntaxException {
-
         // Given
         URI uri = new URI("http://test.com" +
                 "/members" +
