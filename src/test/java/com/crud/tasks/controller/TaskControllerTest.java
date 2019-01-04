@@ -7,7 +7,8 @@ import com.crud.tasks.service.DbService;
 import com.google.gson.Gson;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
+
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -21,9 +22,11 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -116,7 +119,17 @@ public class TaskControllerTest {
 
     @Test
     public void shouldDeleteOneTask() throws Exception {
-        // nie wiem jak przetestować metode która zwraca voida
+        // Given
+        final String TASK_ID = "/1";
+
+        //Metoda deleteTaskById w klasie dbService zwraca voida więc trzeba zrobić tak:
+        doNothing().when(dbService).deleteTaskById(anyLong());
+
+        // When & Then
+        mockMvc.perform(delete(TASK_ENDPOINT + TASK_ID).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        Mockito.verify(dbService, times(1)).deleteTaskById(anyLong());
     }
 
     @Test
@@ -143,7 +156,20 @@ public class TaskControllerTest {
 
     @Test
     public void shouldCreateTask() throws Exception {
-        // nie wiem jak przetestować metode która zwraca voida
-    }
+        // Given
+        TaskDto taskDto = new TaskDto(1L, "Test title", "Test content");
 
+        when(taskMapper.mapToTask(anyObject())).thenReturn(new Task());
+        when(dbService.saveTask(anyObject())).thenReturn(new Task());
+
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(taskDto);
+
+        // When & Then
+        mockMvc.perform(post(TASK_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(jsonContent));
+
+        verify(dbService, times(1)).saveTask(anyObject());
+    }
 }
