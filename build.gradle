@@ -62,4 +62,7 @@ dependencies {
 
     compile('com.google.code.gson:gson:2.8.2')
 
+// Spring Actuater    
+    
+    compile('org.springframework.boot:spring-boot-starter-actuator')
 }
