@@ -28,7 +28,7 @@ public class DbService {
     }
 
     public void deleteTaskById(final Long taskId) {
-        Integer howManyDeleted = repository.deleteById(taskId);
+        int howManyDeleted = repository.deleteById(taskId);
         if (howManyDeleted == 0) {
             throw new TaskNotFoundException("Could not delete task with ID: " + taskId.toString());
         }
