@@ -10,20 +10,26 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class TrelloValidator {
-    public void validateCard(final TrelloCard trelloCard) {
-        if(trelloCard.getName().contains("test")) {
+public class TrelloValidator
+{
+    public void validateCard(final TrelloCard trelloCard)
+    {
+        if (trelloCard.getName().contains("test"))
+        {
             log.info("someone is testing my app");
-        } else {
+        }
+        else
+        {
             log.info("seems that my app is used in proper way");
         }
     }
 
-    public List<TrelloBoard> validateTrelloBoards(final List<TrelloBoard> trelloBoards) {
+    public List<TrelloBoard> validateTrelloBoards(final List<TrelloBoard> trelloBoards)
+    {
         log.info("Starting filtering boards..");
         List<TrelloBoard> filteredBoards = trelloBoards.stream()
-                .filter(trelloBoard -> !trelloBoard.getName().equalsIgnoreCase("test"))
-                .collect(Collectors.toList());
+                                                       .filter(trelloBoard -> !trelloBoard.getName().equalsIgnoreCase("test"))
+                                                       .collect(Collectors.toList());
         log.info("Boards has been filtered. current list size: " + filteredBoards.size());
 
         return filteredBoards;

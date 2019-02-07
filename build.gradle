@@ -13,7 +13,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
-apply plugin: 'war'
+//apply plugin: 'war'
 
 
 group = 'com.crud'
@@ -50,8 +50,8 @@ dependencies {
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
 
 // Zewnętrzny tomcat
-    
-    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+    //TODO: dlaczego jak to jest niezakomentowane to aplikacja odrazu się zamyka??
+    //providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     
 // spring boot starter mail
     
